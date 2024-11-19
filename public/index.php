@@ -5,6 +5,7 @@
 // });
 
 //------------------------------------Début
+use App\Controllers\TodoController;
 use App\Router;
 
 
@@ -19,11 +20,16 @@ if (!isset($_SESSION)) {
 // Créer une instance du routeur
 $router = new Router();
 
-$router->get("/", function () {});
-$router->post("/add", function () {});
-$router->get("/add", function () {});
-$router->get("/toggle", function () {});
-$router->get("/delete", function () {});
+// Créer une instance du controlleur
+$todoController = new TodoController();
 
-echo "<pre>";
-var_dump($router);
+
+// Définir les routes de l'application 
+$router->get("/", [$todoController,'index']);
+$router->post("/add", [$todoController,'add']);
+$router->get("/add", [$todoController,'add']);
+$router->get("/toggle", [$todoController,'toggle']);
+$router->get("/delete", [$todoController,'delete']);
+
+// Résoudre la route correspondant 
+$router->resolve();
