@@ -30,6 +30,8 @@ $router->post("/add", [$todoController,'add']);
 $router->get("/add", [$todoController,'add']);
 $router->get("/toggle", [$todoController,'toggle']);
 $router->get("/delete", [$todoController,'delete']);
+$router->get("/modif", [$todoController,'modif']);
+$router->post("/modif", [$todoController,'modif']);
 
 // Résoudre la route correspondant 
 $router->resolve();

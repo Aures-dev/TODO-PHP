@@ -66,4 +66,32 @@ class TodoController{
         header('Location: /');
             exit;
     }
+
+    public function modif(){
+        
+        $id = $_GET['id'] ?? null;
+        if($id){
+            foreach($_SESSION['todos'] as &$todo){
+                if($todo['id'] === $id){
+                    $_SESSION['toUpdate'] = $todo;
+                }
+            }
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $modifiation = trim($_POST['modifiation']);
+            if($modifiation){
+                foreach($_SESSION['todos'] as &$todo){
+                    if($todo['id'] === $id){
+                        echo "debug";
+                        $todo['task'] = $modifiation;
+                    }
+                }
+            }
+            header('Location: /');
+            exit;
+        }
+
+        require dirname(__DIR__) .'/Views/modif.php';
+    }
 }
