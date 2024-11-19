@@ -1,7 +1,3 @@
-<?php 
-$content = "Hello world.🚀";
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
