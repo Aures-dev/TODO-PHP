@@ -14,5 +14,8 @@
             "email": "auresaz69@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "scripts":{
+        "start":"php -S localhost:8080 -t public"
+    }
 }
