@@ -4,7 +4,7 @@ namespace App\Controllers;
 use DB\Database;
 use App\Models\Todo;
 
-class TodoController{
+class TodoController extends Controller {
     private Todo $todoModel;
 
     public function __construct(){
@@ -14,10 +14,7 @@ class TodoController{
     public function index(){
        
         $todos = $this->todoModel->getAll();
-
-        //Charger le vue "Views/index.php"
-            // require __DIR__ ."/../Views/index.php";
-        require dirname(__DIR__) ."/Views/index.php";
+        $this->view("index",["todos"=>$todos]);
     }
     public function add(){
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -26,11 +23,10 @@ class TodoController{
             if($task){
                $this->todoModel->add($task);
             }
-            header('Location: /');
-            exit;
+            $this->redirect('/');
         }
         // Charger la vue add.php
-        require dirname(__DIR__) ."/Views/add.php";
+        $this->view('add');
     }
 
     public function delete(){
@@ -40,8 +36,7 @@ class TodoController{
             $this->todoModel->delete((int) $id);
         }
 
-        header('Location: /');
-            exit;
+        $this->redirect("/");
     }
 
     public function toggle(){
@@ -51,8 +46,7 @@ class TodoController{
              $this->todoModel->toggle((int) $id);
         }
 
-        header('Location: /');
-            exit;
+        $this->redirect("/");
     }
 
     public function modif(){
@@ -60,16 +54,15 @@ class TodoController{
         $id = $_GET['id'] ?? null;
         if($id){
             $taskToModif =  $this->todoModel->toModif((int) $id);
-        }
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $modification = trim($_POST['modifiation']);
-            if($modification){
-                $this->todoModel->modif((string) $modification,(int) $id);
+        
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $modification = trim($_POST['modifiation']);
+                if($modification){
+                    $this->todoModel->modif((string) $modification,(int) $id);
+                }
+                $this->redirect('/');
             }
-            header('Location: /');
-            exit;
+            $this->view("modif",["taskToModif"=>$taskToModif]);
         }
-
-        require dirname(__DIR__) .'/Views/modif.php';
     }
 }

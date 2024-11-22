@@ -1,4 +1,5 @@
 <?php 
+var_dump($taskToModif);
 ob_start();
 ?>
 <h1>Modifier une tâche</h1>
